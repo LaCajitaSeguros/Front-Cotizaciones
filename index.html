@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizá tu auto</title>
+    <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+    <div class="layout">
+        <div class="izquierda">
+            <div>
+                <img src="img/logo.jpg" alt="Logo de La Cajita" width="500" />
+              </div>
+        </div>
+        <div class="derecha">
+            <div>
+                <h1>Ingresá los datos de tu auto</h1>
+                <h2>
+                    Año
+                </h2>
+
+                <form>
+                    <select id="dropdown-anio" name="dropdown-anio-vehiculo">
+                        <option value="" disabled selected>Buscar año</option>
+                    </select>
+                </form>
+
+                <h2>
+                    Marca
+                </h2>
+
+                <form>
+                    <select id="dropdown-marca" name="dropdown-marca-vehiculo">
+                        <option value="" disabled selected>Buscar marca</option>
+                    </select>
+                </form>
+
+                <h2>
+                    Modelo
+                </h2>
+
+                <form>
+                    <select id="dropdown-modelo" name="dropdown-modelo-vehiculo">
+                        <option value="" disabled selected>Buscar modelo</option>
+                    </select>
+                </form>
+
+                <h2>
+                    Versión
+                </h2>
+
+                <form>
+                    <select id="dropdown-version" name="dropdown-version-vehiculo">
+                        <option value="" disabled selected>Buscar versión</option>
+                    </select>
+                </form>
+
+                <div class="center">
+                    <div>
+                        <button id="next-button" class="btn btn-primary mb-20" disabled>Siguiente</button>
+                    </div>                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+</html>
