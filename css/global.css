@@ -55,6 +55,7 @@ body {
     }
 }
 
+
 .block{
     display: block;
 }
@@ -101,7 +102,6 @@ body {
         color: var(--bg-primary);
       }
 }
-
 
 .subTitle {
     color: #858585;
@@ -151,6 +151,68 @@ input, select {
 }
 
 #next-button:disabled {
+  background-color: #cccccc;
+    border-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px; /* Ajusta el espacio entre el checkbox y el texto */
+  margin-bottom: 20px; /* Ajusta el espacio entre elementos */
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px; /* Ajusta el tamaño del checkbox */
+  width: 25px; /* Ajusta el tamaño del checkbox */
+  background-color: #fff;
+  border: 1px solid #c5c5c5;
+  border-radius: 4px; /* Hace que el checkbox sea cuadrado */
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #007bff; /* Cambia el color de fondo cuando el checkbox está seleccionado */
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 9px; /* Ajusta la posición del símbolo de verificación */
+  top: 5px; /* Ajusta la posición del símbolo de verificación */
+  width: 5px; /* Ajusta el tamaño del símbolo de verificación */
+  height: 10px; /* Ajusta el tamaño del símbolo de verificación */
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+#cotizar-button:disabled {
   background-color: #cccccc;
     border-color: #cccccc;
     color: #666666;

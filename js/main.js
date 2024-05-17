@@ -1,9 +1,10 @@
+const dropdownAnio = document.getElementById('dropdown-anio');
+const dropdownMarca = document.getElementById('dropdown-marca');
+const dropdownModelo = document.getElementById('dropdown-modelo');
+const dropdownVersion = document.getElementById('dropdown-version');
+const nextButton = document.getElementById('next-button');
+
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdownAnio = document.getElementById('dropdown-anio');
-    const dropdownMarca = document.getElementById('dropdown-marca');
-    const dropdownModelo = document.getElementById('dropdown-modelo');
-    const dropdownVersion = document.getElementById('dropdown-version');
-    const nextButton = document.getElementById('next-button');
 
     const apiMarcaUrl = 'https://localhost:7061/api/Marca';
 
@@ -52,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 // Clear previous options
                 dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>';
+
+                // Clear dropdown-version and add default option
+                dropdownVersion.innerHTML = '<option value="" disabled selected>Buscar versión</option>';
 
                 // Populate dropdown-modelo with fetched data
                 data.forEach(item => {
@@ -106,5 +110,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //Enviar al usurio a la siguiente página
 document.getElementById('next-button').addEventListener('click', function() {
-    window.location.href = './registrate.html';
+    window.location.href = './cotizar-page2.html';
+});
+
+
+document.getElementById('next-button').addEventListener('click', function() {
+    // Guardar los valores seleccionados en sessionStorage
+    sessionStorage.setItem('selectedAnio', dropdownAnio.value);
+    sessionStorage.setItem('selectedMarca', dropdownMarca.value);
+    sessionStorage.setItem('selectedModelo', dropdownModelo.value);
+    sessionStorage.setItem('selectedVersion', dropdownVersion.value);
+
+    // Redirigir al usuario a la siguiente página
+    window.location.href = './cotizar-page2.html';
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Restaurar los valores seleccionados desde sessionStorage, si existen
+    if (sessionStorage.getItem('selectedAnio')) {
+        dropdownAnio.value = sessionStorage.getItem('selectedAnio');
+    }
+    if (sessionStorage.getItem('selectedMarca')) {
+        dropdownMarca.value = sessionStorage.getItem('selectedMarca');
+    }
+    if (sessionStorage.getItem('selectedModelo')) {
+        dropdownModelo.value = sessionStorage.getItem('selectedModelo');
+    }
+    if (sessionStorage.getItem('selectedVersion')) {
+        dropdownVersion.value = sessionStorage.getItem('selectedVersion');
+    }
+});
+
+// Evento beforeunload para restablecer la página al recargar
+window.addEventListener('beforeunload', function(event) {
+    dropdownAnio.selectedIndex = '<option value="" disabled selected>Buscar año</option>'; // Restablecer dropdown de año seleccionando la primera opción
+    dropdownMarca.selectedIndex = '<option value="" disabled selected>Buscar marca</option>'; // Restablecer dropdown de marca seleccionando la primera opción
+    dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>'; // Limpiar dropdown de modelo
+    dropdownVersion.innerHTML = '<option value="" disabled selected>Buscar versión</option>'; // Limpiar dropdown de versión
 });
