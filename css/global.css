@@ -158,10 +158,10 @@ input, select {
 }
 
 .checkbox-container {
-  display: block;
+  display: inline-block;
   position: relative;
-  padding-left: 35px; /* Ajusta el espacio entre el checkbox y el texto */
-  margin-bottom: 20px; /* Ajusta el espacio entre elementos */
+  padding-left: 35px;
+  margin-bottom: 20px;
   cursor: pointer;
   user-select: none;
 }
@@ -170,21 +170,35 @@ input, select {
   position: absolute;
   opacity: 0;
   cursor: pointer;
+  height: 25px;
+  width: 25px;
+  /* Establece pointer-events a none para deshabilitar los clics en el input,
+     permitiendo que el clic pase a través de él */
+  pointer-events: none;
 }
 
 .checkmark {
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px; /* Ajusta el tamaño del checkbox */
-  width: 25px; /* Ajusta el tamaño del checkbox */
+  height: 25px;
+  width: 25px;
   background-color: #fff;
   border: 1px solid #c5c5c5;
-  border-radius: 4px; /* Hace que el checkbox sea cuadrado */
+  border-radius: 4px;
 }
 
-.checkbox-container:hover input ~ .checkmark {
+/* Habilita los clics en el contenedor para que solo sean efectivos dentro del cuadrado del checkbox */
+.checkbox-container:hover .checkmark {
   background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #007bff;
+}
+
+.checkbox-container:hover input:checked ~ .checkmark {
+  background-color: #007bff;
 }
 
 .checkbox-container input:checked ~ .checkmark {

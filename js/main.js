@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
         dropdownAnio.appendChild(option);
     }
 
+    dropdownAnio.addEventListener('change', function() {
+        // Llama a la función para actualizar el almacenamiento local
+        actualizarLocalStorage();
+    });
+
     // Fetch data from the API endpoint for Marca
     fetch(apiMarcaUrl)
         .then(response => response.json())
@@ -71,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+            actualizarLocalStorage();
     });
 
     // Add event listener to marca dropdown to fetch versiones based on selected modelo
@@ -99,6 +105,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+            actualizarLocalStorage();
+    });
+
+    dropdownVersion.addEventListener('change', function() {
+        // Llama a la función para actualizar el almacenamiento local
+        actualizarLocalStorage();
     });
 
     // Add event listeners to dropdowns to check their values on change
@@ -113,33 +125,15 @@ document.getElementById('next-button').addEventListener('click', function() {
     window.location.href = './cotizar-page2.html';
 });
 
+    // Función para actualizar el almacenamiento local con los valores seleccionados
+    function actualizarLocalStorage() {
+        localStorage.setItem('selectedMarcaId', dropdownMarca.value);
+        localStorage.setItem('selectedModeloId', dropdownModelo.value);
+        localStorage.setItem('selectedVersionId', dropdownVersion.value);
+        localStorage.setItem('selectedAnio', dropdownAnio.value);
+    }
 
-document.getElementById('next-button').addEventListener('click', function() {
-    // Guardar los valores seleccionados en sessionStorage
-    sessionStorage.setItem('selectedAnio', dropdownAnio.value);
-    sessionStorage.setItem('selectedMarca', dropdownMarca.value);
-    sessionStorage.setItem('selectedModelo', dropdownModelo.value);
-    sessionStorage.setItem('selectedVersion', dropdownVersion.value);
-
-    // Redirigir al usuario a la siguiente página
-    window.location.href = './cotizar-page2.html';
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Restaurar los valores seleccionados desde sessionStorage, si existen
-    if (sessionStorage.getItem('selectedAnio')) {
-        dropdownAnio.value = sessionStorage.getItem('selectedAnio');
-    }
-    if (sessionStorage.getItem('selectedMarca')) {
-        dropdownMarca.value = sessionStorage.getItem('selectedMarca');
-    }
-    if (sessionStorage.getItem('selectedModelo')) {
-        dropdownModelo.value = sessionStorage.getItem('selectedModelo');
-    }
-    if (sessionStorage.getItem('selectedVersion')) {
-        dropdownVersion.value = sessionStorage.getItem('selectedVersion');
-    }
-});
+console.log(test);
 
 // Evento beforeunload para restablecer la página al recargar
 window.addEventListener('beforeunload', function(event) {
@@ -147,4 +141,5 @@ window.addEventListener('beforeunload', function(event) {
     dropdownMarca.selectedIndex = '<option value="" disabled selected>Buscar marca</option>'; // Restablecer dropdown de marca seleccionando la primera opción
     dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>'; // Limpiar dropdown de modelo
     dropdownVersion.innerHTML = '<option value="" disabled selected>Buscar versión</option>'; // Limpiar dropdown de versión
+    localStorage.clear();
 });
