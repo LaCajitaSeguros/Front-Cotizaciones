@@ -5,16 +5,15 @@ const dropdownVersion = document.getElementById('dropdown-version');
 const cotizarButton = document.getElementById('cotizar-button');
 const dropdownLocalidad = document.getElementById('dropdown-localidad');
 const fechaNacimientoInput = document.getElementById("fecha-nacimiento");
-let edadUsuario = null; // Variable para almacenar la edad del usuario
 const tieneGNCInput = document.getElementById("tiene-gnc"); // Obtener el elemento del checkbox
+let edadUsuario = null; // Variable para almacenar la edad del usuario
 let tieneGNC = false; // Variable global para almacenar el estado del checkbox
 
 document.addEventListener('DOMContentLoaded', function () {
-
     const apiMarcaUrl = 'https://localhost:7061/api/Marca';
     const apiLocalidadUrl = 'https://localhost:7061/api/Localidad';
 
-    // Chequear si hay que deshabilitar o no el boton de siguiente. Si tiene todos los valores se habilita
+    // Chequear si hay que deshabilitar o no el botón de cotizar. Si tiene todos los valores se habilita
     function checkDropdowns() {
         if (
             dropdownAnio.value &&
@@ -43,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     dropdownAnio.addEventListener('change', function () {
-        // Llama a la función para actualizar el almacenamiento local
         actualizarLocalStorage();
         checkDropdowns();
     });
@@ -122,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("El valor de tieneGNC es:", tieneGNC);
     });
 
-
     // Mostrar modelos según la marca que se seleccionó
     dropdownMarca.addEventListener('change', function () {
         const selectedMarcaId = dropdownMarca.value;
@@ -131,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(apiModeloUrl)
             .then(response => response.json())
             .then(data => {
-                // Si se cambio de Marca, vuelve a mostrar el texto por default
+                // Si se cambió de Marca, vuelve a mostrar el texto por defecto
                 dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>';
 
                 // Clear dropdown-version and add default option
@@ -184,8 +181,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dropdownVersion.addEventListener('change', function () {
-        // Llama a la función para actualizar el almacenamiento local
         actualizarLocalStorage();
+        checkDropdowns();
+    });
+
+    dropdownLocalidad.addEventListener('change', function () {
+        const selectedOption = dropdownLocalidad.options[dropdownLocalidad.selectedIndex];
+        selectedLocalidad = selectedOption.textContent;
+        console.log('Localidad seleccionada:', selectedLocalidad);
+        localStorage.setItem('selectedLocalidadId', selectedLocalidad);
+        actualizarLocalStorage();
+        checkDropdowns();
     });
 
     // Chequear si todos los campos tienen valores
@@ -193,10 +199,11 @@ document.addEventListener('DOMContentLoaded', function () {
     dropdownMarca.addEventListener('change', checkDropdowns);
     dropdownModelo.addEventListener('change', checkDropdowns);
     dropdownVersion.addEventListener('change', checkDropdowns);
+    dropdownLocalidad.addEventListener('change', checkDropdowns);
 });
 
-//Enviar al usurio a la siguiente página
-document.getElementById('cotizar-button').addEventListener('click', function () {
+// Enviar al usuario a la siguiente página
+cotizarButton.addEventListener('click', function () {
     enviarSolicitudPOST();
 });
 
@@ -206,9 +213,8 @@ function actualizarLocalStorage() {
     localStorage.setItem('selectedModeloId', dropdownModelo.value);
     localStorage.setItem('selectedVersionId', dropdownVersion.value);
     localStorage.setItem('selectedAnio', dropdownAnio.value);
-    localStorage.setItem('selectedLocalidadId', dropdownLocalidad.value);
     localStorage.setItem('fechaNacimiento', fechaNacimientoInput.value);
-    localStorage.setItem('tieneGNC', tieneGNC)
+    localStorage.setItem('tieneGNC', tieneGNC);
 }
 
 // Función para enviar la solicitud POST
@@ -221,13 +227,13 @@ function enviarSolicitudPOST() {
     const selectedVersionId = localStorage.getItem('selectedVersionId');
     const tieneGNC = localStorage.getItem('tieneGNC') === 'true';
 
-    console.log(localidad);
-    console.log(edad);
-    console.log(selectedAnio);
-    console.log(selectedMarcaId);
-    console.log(selectedModeloId);
-    console.log(selectedVersionId);
-    console.log(tieneGNC);
+    console.log("Localidad:", localidad);
+    console.log("Edad:", edad);
+    console.log("Año Vehículo:", selectedAnio);
+    console.log("Marca ID:", selectedMarcaId);
+    console.log("Modelo ID:", selectedModeloId);
+    console.log("Versión ID:", selectedVersionId);
+    console.log("Tiene GNC:", tieneGNC);
 
     const data = {
         localidad: localidad,
@@ -264,11 +270,10 @@ function enviarSolicitudPOST() {
         });
 }
 
-
 // Evento beforeunload para restablecer la página al recargar
 window.addEventListener('beforeunload', function (event) {
-    dropdownAnio.selectedIndex = '<option value="" disabled selected>Buscar año</option>'; // Restablecer dropdown de año seleccionando la primera opción
-    dropdownMarca.selectedIndex = '<option value="" disabled selected>Buscar versión</option>'; // Restablecer dropdown de marca seleccionando la primera opción
+    dropdownAnio.selectedIndex = 0; // Restablecer dropdown de año seleccionando la primera opción
+    dropdownMarca.selectedIndex = 0; // Restablecer dropdown de marca seleccionando la primera opción
     dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>'; // Limpiar dropdown de modelo
     dropdownVersion.innerHTML = '<option value="" disabled selected>Buscar versión</option>'; // Limpiar dropdown de versión
     localStorage.clear();
