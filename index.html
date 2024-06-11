@@ -15,9 +15,9 @@
         </div>
         <div class="derecha">
             <div>
-                <h1>Ingresá los datos de tu auto</h1>
+                <h1>Ingresá los siguientes datos</h1>
                 <h2>
-                    Año
+                    Año del auto
                 </h2>
 
                 <form>
@@ -27,7 +27,7 @@
                 </form>
 
                 <h2>
-                    Marca
+                    Marca del auto
                 </h2>
 
                 <form>
@@ -37,7 +37,7 @@
                 </form>
 
                 <h2>
-                    Modelo
+                    Modelo de auto
                 </h2>
 
                 <form>
@@ -56,15 +56,51 @@
                     </select>
                 </form>
 
+                <h2>
+                    ¿Dónde vivís?
+                </h2>
+
+                <form>
+                    <select id="dropdown-localidad" name="dropdown-localidad-usuario">
+                        <option value="" disabled selected>Buscar localidad</option>
+                    </select>
+                </form>
+
+                <h2>
+                    Fecha de nacimiento
+                </h2>
+
+                <form>
+                    <input type="date" id="fecha-nacimiento" name="fecha-nacimiento-usuario" required style="width: 93%;">
+                </form>
+
+                <h2>
+                    GNC
+                </h2>
+
+                <form>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="tiene-gnc" name="tiene-gnc-usuario"> 
+                        <span class="checkmark"></span>
+                    </label>
+                </form>
+
                 <div class="center">
                     <div>
-                        <button id="next-button" class="btn btn-primary mb-20" disabled>Siguiente</button>
+                        <button id="cotizar-button" class="btn btn-primary mb-20" disabled>Cotizar</button>
                     </div>                   
                 </div>
+
+                <!-- <div class="center">
+                    <div>
+                        <button id="next-button" class="btn btn-primary mb-20" disabled>Volver</button>
+                    </div>                   
+                </div> -->
             </div>
             
         </div>
     </div>
     <script src="./js/main.js"></script>
+    <!-- <script src="./js/cotizar-page2.js"></script> -->
 </body>
 </html>
