@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(apiLocalidadUrl)
         .then(response => response.json())
         .then(data => {
+            // Ordenar alfabéticamente las localidades
+            data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+            // Iterar sobre las localidades ordenadas
             data.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id;
@@ -76,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => {
             console.error('Error fetching data:', error);
         });
+
 
     // Función para verificar si el usuario tiene al menos 18 años
     function verificarEdad(fecha) {
