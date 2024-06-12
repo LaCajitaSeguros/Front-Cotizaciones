@@ -229,6 +229,10 @@ function enviarSolicitudPOST() {
     const selectedVersionId = localStorage.getItem('selectedVersionId');
     const tieneGNC = localStorage.getItem('tieneGNC') === 'true'; // Convertir a booleano
 
+    const marcaNombre = dropdownMarca.options[dropdownMarca.selectedIndex].text;
+    const modeloNombre = dropdownModelo.options[dropdownModelo.selectedIndex].text;
+    const versionNombre = dropdownVersion.options[dropdownVersion.selectedIndex].text;
+
     console.log("Localidad:", localidad);
     console.log("Edad:", edad);
     console.log("Año Vehículo:", selectedAnio);
@@ -264,8 +268,26 @@ function enviarSolicitudPOST() {
             }
             return response.json();
         })
-        .then(data => {
-            console.log('Solicitud POST enviada con éxito:', data);
+        .then(responseData => {
+            console.log('Solicitud POST enviada con éxito:', responseData);
+
+            // Agregar datos del auto
+            const datosAuto = {
+                marca: marcaNombre,
+                modelo: modeloNombre,
+                version: versionNombre
+            };
+
+            // Agregar el objeto "datosAuto" al JSON de respuesta
+            const jsonResponse = {
+                cobertura: responseData,
+                datosAuto: datosAuto
+            };
+            // Almacenar el JSON en localStorage
+            localStorage.setItem('jsonResponse', JSON.stringify(jsonResponse));
+
+            // Redirigir a la siguiente página
+            window.location.href = 'siguiente-pagina.html';
         })
         .catch(error => {
             console.error('Error al enviar la solicitud POST:', error);
