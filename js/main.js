@@ -293,12 +293,3 @@ function enviarSolicitudPOST() {
             console.error('Error al enviar la solicitud POST:', error);
         });
 }
-
-// Evento beforeunload para restablecer la página al recargar
-window.addEventListener('beforeunload', function (event) {
-    dropdownAnio.selectedIndex = 0; // Restablecer dropdown de año seleccionando la primera opción
-    dropdownMarca.selectedIndex = 0; // Restablecer dropdown de marca seleccionando la primera opción
-    dropdownModelo.innerHTML = '<option value="" disabled selected>Buscar modelo</option>'; // Limpiar dropdown de modelo
-    dropdownVersion.innerHTML = '<option value="" disabled selected>Buscar versión</option>'; // Limpiar dropdown de versión
-    localStorage.clear();
-});
