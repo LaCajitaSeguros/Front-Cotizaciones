@@ -1,3 +1,4 @@
+// Obtener elementos del DOM
 const dropdownAnio = document.getElementById('dropdown-anio');
 const dropdownMarca = document.getElementById('dropdown-marca');
 const dropdownModelo = document.getElementById('dropdown-modelo');
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Aquí puedes hacer lo que necesites con el valor del checkbox
         console.log("El valor de tieneGNC es:", tieneGNC);
+        actualizarLocalStorage(); // Actualiza el almacenamiento local cuando cambia el checkbox
     });
 
     // Mostrar modelos según la marca que se seleccionó
@@ -214,7 +216,7 @@ function actualizarLocalStorage() {
     localStorage.setItem('selectedVersionId', dropdownVersion.value);
     localStorage.setItem('selectedAnio', dropdownAnio.value);
     localStorage.setItem('fechaNacimiento', fechaNacimientoInput.value);
-    localStorage.setItem('tieneGNC', tieneGNC);
+    localStorage.setItem('tieneGNC', tieneGNC.toString()); // Guardar como cadena "true" o "false"
 }
 
 // Función para enviar la solicitud POST
@@ -225,7 +227,7 @@ function enviarSolicitudPOST() {
     const selectedMarcaId = localStorage.getItem('selectedMarcaId');
     const selectedModeloId = localStorage.getItem('selectedModeloId');
     const selectedVersionId = localStorage.getItem('selectedVersionId');
-    const tieneGNC = localStorage.getItem('tieneGNC') === 'true';
+    const tieneGNC = localStorage.getItem('tieneGNC') === 'true'; // Convertir a booleano
 
     console.log("Localidad:", localidad);
     console.log("Edad:", edad);
