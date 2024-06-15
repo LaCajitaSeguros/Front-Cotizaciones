@@ -11,6 +11,17 @@ let edadUsuario = null; // Variable para almacenar la edad del usuario
 let tieneGNC = false; // Variable global para almacenar el estado del checkbox
 const volverButton = document.getElementById('volver-button');
 
+// Función para mostrar el spinner
+function mostrarSpinner() {
+    document.getElementById('overlay').style.display = 'block';
+}
+
+// Función para ocultar el spinner
+function ocultarSpinner() {
+    document.getElementById('overlay').style.display = 'none';
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const apiMarcaUrl = 'https://localhost:7061/api/Marca';
     const apiLocalidadUrl = 'https://localhost:7061/api/Localidad';
@@ -232,6 +243,8 @@ function actualizarLocalStorage() {
 
 // Función para enviar la solicitud POST
 function enviarSolicitudPOST() {
+    mostrarSpinner(); // Mostrar spinner antes de la solicitud POST
+
     const localidad = localStorage.getItem('selectedLocalidadId');
     const edad = edadUsuario;
     const selectedAnio = localStorage.getItem('selectedAnio');
@@ -243,14 +256,6 @@ function enviarSolicitudPOST() {
     const marcaNombre = dropdownMarca.options[dropdownMarca.selectedIndex].text;
     const modeloNombre = dropdownModelo.options[dropdownModelo.selectedIndex].text;
     const versionNombre = dropdownVersion.options[dropdownVersion.selectedIndex].text;
-
-    console.log("Localidad:", localidad);
-    console.log("Edad:", edad);
-    console.log("Año Vehículo:", selectedAnio);
-    console.log("Marca ID:", selectedMarcaId);
-    console.log("Modelo ID:", selectedModeloId);
-    console.log("Versión ID:", selectedVersionId);
-    console.log("Tiene GNC:", tieneGNC);
 
     const data = {
         localidad: localidad,
@@ -282,25 +287,25 @@ function enviarSolicitudPOST() {
         .then(responseData => {
             console.log('Solicitud POST enviada con éxito:', responseData);
 
-            // Agregar datos del auto
             const datosAuto = {
                 marca: marcaNombre,
                 modelo: modeloNombre,
                 version: versionNombre
             };
 
-            // Agregar el objeto "datosAuto" al JSON de respuesta
             const jsonResponse = {
                 cobertura: responseData,
                 datosAuto: datosAuto
             };
-            // Almacenar el JSON en localStorage
+
             localStorage.setItem('jsonResponse', JSON.stringify(jsonResponse));
 
-            // Redirigir a la siguiente página
-            window.location.href = 'siguiente-pagina.html';
+            ocultarSpinner(); // Ocultar spinner después de recibir respuesta
+
+            window.location.href = 'siguiente-pagina.html'; // Redirigir a la siguiente página
         })
         .catch(error => {
             console.error('Error al enviar la solicitud POST:', error);
+            ocultarSpinner(); // Asegurarse de ocultar el spinner en caso de error
         });
 }
