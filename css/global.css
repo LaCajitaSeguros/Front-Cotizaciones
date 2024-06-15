@@ -92,8 +92,7 @@ body {
 }
 
 .btn-secundary{
-    /* background-color: var(--bg-default); */
-    background-color: blue;
+    background-color: var(--bg-default);
     border: solid 2px var(--bg-default);
     color: var(--bg-secondary);
     &:hover {
