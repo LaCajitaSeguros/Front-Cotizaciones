@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cotizá tu auto</title>
     <link rel="stylesheet" href="css/global.css">
 </head>
+
 <body>
     <div class="layout">
         <div class="izquierda">
             <div>
                 <img src="img/logo.jpg" alt="Logo de La Cajita" width="500" />
-              </div>
+            </div>
         </div>
         <div class="derecha">
             <div>
@@ -71,7 +73,8 @@
                 </h2>
 
                 <form>
-                    <input type="date" id="fecha-nacimiento" name="fecha-nacimiento-usuario" required style="width: 93%;">
+                    <input type="date" id="fecha-nacimiento" name="fecha-nacimiento-usuario" required
+                        style="width: 88%;">
                 </form>
 
                 <h2>
@@ -80,26 +83,23 @@
 
                 <form>
                     <label class="checkbox-container">
-                        <input type="checkbox" id="tiene-gnc" name="tiene-gnc-usuario"> 
+                        <input type="checkbox" id="tiene-gnc" name="tiene-gnc-usuario">
                         <span class="checkmark"></span>
                     </label>
                 </form>
 
                 <div class="center">
                     <div>
+                        <button id="volver-button" class="btn btn-secondary mb-20">Volver</button>
                         <button id="cotizar-button" class="btn btn-primary mb-20" disabled>Cotizar</button>
-                    </div>                   
+                    </div>
                 </div>
 
-                <!-- <div class="center">
-                    <div>
-                        <button id="next-button" class="btn btn-primary mb-20" disabled>Volver</button>
-                    </div>                   
-                </div> -->
             </div>
-            
+
         </div>
     </div>
     <script src="./js/main.js"></script>
 </body>
+
 </html>

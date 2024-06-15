@@ -9,6 +9,7 @@ const fechaNacimientoInput = document.getElementById("fecha-nacimiento");
 const tieneGNCInput = document.getElementById("tiene-gnc"); // Obtener el elemento del checkbox
 let edadUsuario = null; // Variable para almacenar la edad del usuario
 let tieneGNC = false; // Variable global para almacenar el estado del checkbox
+const volverButton = document.getElementById('volver-button');
 
 document.addEventListener('DOMContentLoaded', function () {
     const apiMarcaUrl = 'https://localhost:7061/api/Marca';
@@ -212,6 +213,11 @@ document.addEventListener('DOMContentLoaded', function () {
 // Enviar al usuario a la siguiente página
 cotizarButton.addEventListener('click', function () {
     enviarSolicitudPOST();
+});
+
+// Asegúrate de tener el ID correcto y no guiones bajos
+volverButton.addEventListener('click', function () {
+    window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 });
 
 // Función para actualizar el almacenamiento local con los valores seleccionados
