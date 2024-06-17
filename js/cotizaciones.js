@@ -302,7 +302,7 @@ function enviarSolicitudPOST() {
 
             ocultarSpinner(); // Ocultar spinner después de recibir respuesta
 
-            window.location.href = 'siguiente-pagina.html'; // Redirigir a la siguiente página
+            window.location.href = '../HTML/siguiente-pagina.html'; // Redirigir a la siguiente página
         })
         .catch(error => {
             console.error('Error al enviar la solicitud POST:', error);
