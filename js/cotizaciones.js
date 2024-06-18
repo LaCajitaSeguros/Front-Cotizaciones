@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Iterar sobre las localidades ordenadas
             data.forEach(item => {
                 const option = document.createElement('option');
-                option.value = item.id;
+                option.value = item.localidadId;
                 option.textContent = item.nombre;
                 dropdownLocalidad.appendChild(option);
             });
@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Buscar versiones según el modelo
     dropdownModelo.addEventListener('change', function () {
         const selectedModeloId = dropdownModelo.value;
-        console.log(selectedModeloId);
         const apiVersionUrl = `https://localhost:7061/api/Version/${selectedModeloId}`;
 
         fetch(apiVersionUrl)
@@ -207,8 +206,9 @@ document.addEventListener('DOMContentLoaded', function () {
     dropdownLocalidad.addEventListener('change', function () {
         const selectedOption = dropdownLocalidad.options[dropdownLocalidad.selectedIndex];
         selectedLocalidad = selectedOption.textContent;
-        console.log('Localidad seleccionada:', selectedLocalidad);
-        localStorage.setItem('selectedLocalidadId', selectedLocalidad);
+        const selectedLocalidadId = selectedOption.value;
+        localStorage.setItem('selectedLocalidad', selectedLocalidad);
+        localStorage.setItem('selectedLocalidadId', selectedLocalidadId);
         actualizarLocalStorage();
         checkDropdowns();
     });
@@ -245,7 +245,8 @@ function actualizarLocalStorage() {
 function enviarSolicitudPOST() {
     mostrarSpinner(); // Mostrar spinner antes de la solicitud POST
 
-    const localidad = localStorage.getItem('selectedLocalidadId');
+    const localidad = localStorage.getItem('selectedLocalidad');
+    const localidadId = localStorage.getItem('selectedLocalidadId');
     const edad = edadUsuario;
     const selectedAnio = localStorage.getItem('selectedAnio');
     const selectedMarcaId = localStorage.getItem('selectedMarcaId');
@@ -293,9 +294,15 @@ function enviarSolicitudPOST() {
                 version: versionNombre
             };
 
+            const ubicacion = {
+                localidadId: localidadId,
+                provinciaId: 1 // ProvinciaId constante
+            };
+
             const jsonResponse = {
                 cobertura: responseData,
-                datosAuto: datosAuto
+                datosAuto: datosAuto,
+                ubicacion: ubicacion
             };
 
             localStorage.setItem('jsonResponse', JSON.stringify(jsonResponse));
